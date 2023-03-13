@@ -1,24 +1,42 @@
 import logo from './logo.svg';
+import NavBar from './components/NavBar/NavBar';
+import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 import './App.css';
+import { useEffect, useState } from 'react';
+import { getNotes } from './api/notesApi';
+import Main from './components/Main/Main';
+import SignUp from './components/SignUp/SignUp';
+import SignIn from './components/SignIn/SignIn';
 
-function App() {
+const App = () => {
+  const [notes, setNotes] = useState(null);
+
+  useEffect(() => {
+      async function getData() {
+        try {
+          const notes = await getNotes();
+          setNotes(notes);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getData();
+  }, []);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <html>
+    <head></head>
+      <body>
+        <NavBar authorized={notes != null} />
+        <BrowserRouter>
+          <Routes >
+            <Route exact path="/" element={<Main notes={notes}/>} />
+            <Route exact path="/signup" element={<SignUp />} />
+            <Route exact path="/signin" element={<SignIn />} />
+          </Routes>
+        </BrowserRouter>
+      </body>
+    </html>
   );
 }
 
