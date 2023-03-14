@@ -1,3 +1,5 @@
+Часть функционала написана не самым лучшим образом, т.к немного не было времени на адекватные решения.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
